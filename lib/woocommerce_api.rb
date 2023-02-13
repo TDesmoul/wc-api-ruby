@@ -1,5 +1,7 @@
 require "httparty"
 require "json"
+require "erb"
+include ERB::Util
 
 require "woocommerce_api/oauth"
 require "woocommerce_api/version"
@@ -97,7 +99,7 @@ module WooCommerce
 
       endpoint += "?" unless endpoint.include? "?"
       endpoint += "&" unless endpoint.end_with? "?"
-      endpoint + URI.encode(flatten_hash(data).join("&"))
+      endpoint + ERB::Util.url_encode(flatten_hash(data).join("&"))
     end
 
     # Internal: Get URL for requests
